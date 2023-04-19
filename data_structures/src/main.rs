@@ -25,14 +25,12 @@ pub fn insertion_sort(arr: &mut Vec<isize>){
 
 fn merge_sort(arr: &mut [i32]) {
     if arr.len() > 1 {
-        let mut temp = vec![0; arr.len()];     // We need a temp copy of Arr because of Rusts rules of ownership
-        temp.copy_from_slice(&arr[..]);             // Since we cant reference arr more than once within the scope, we need to copy the String
-        println!("{:?}", temp);
         let mid = arr.len() / 2;
-        let (left, right) = temp.split_at_mut(mid); // We want to split arr
-        merge_sort(left);
-        merge_sort(right);
-        merge(left, right,arr); // we want to write back to arr
+        let mut left = arr[..mid].to_vec();
+        let mut right = arr[mid..].to_vec();
+        merge_sort(left.as_mut());
+        merge_sort(right.as_mut());
+        merge(left.as_mut(), right.as_mut(),arr); // we want to write back to arr
     }
 }
 
